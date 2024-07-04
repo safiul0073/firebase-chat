@@ -23,6 +23,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/Chat/index.tsx", "src/libs/firebase.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/chat/index.tsx", "src/libs/firebase/firebase.ts"],
   "exclude": ["node_modules"]
 }

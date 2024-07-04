@@ -8,9 +8,5 @@ const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-const roomsCollection = collection(db, 'rooms');
-
-const messagesCollection = (roomId: string) => collection(db, `rooms/${roomId}/messages`);
-
-export {  db, roomsCollection, messagesCollection }
+export {  db }
 

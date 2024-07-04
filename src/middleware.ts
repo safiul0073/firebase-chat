@@ -1,24 +1,25 @@
-import { getServerSession } from 'next-auth';
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
-import { authOptions } from './app/api/auth';
-import { getSession } from 'next-auth/react';
-import { getToken } from 'next-auth/jwt';
- 
-// This function can be marked `async` if using `await` inside
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { getToken } from "next-auth/jwt";
+
 export async function middleware(request: NextRequest) {
-    const requestHeaders = new Headers(request.headers);
-  requestHeaders.set('x-url', request.url);
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-url", request.url);
 
-  // const jwt = (await getToken({ req: request }));
-  //   if (!jwt) {
-        
-  //   }
+  const jwt = await getToken({ req: request });
+  const url = request.nextUrl.pathname;
+  const witoutAuth = ["/auth/login", "/auth/register"];
+  if (!jwt && !witoutAuth.includes(url)) {
+    return NextResponse.next(
+      {
+        headers: requestHeaders,
+      }
+    )
+  }
 
-    return NextResponse.next();
+  return NextResponse.next();
 }
- 
-// See "Matching Paths" below to learn more
+
 export const config = {
-  matcher: '/((?!.*\\..*|_next).*)',
-}
+  matcher: "/((?!.*\\..*|_next).*)",
+};

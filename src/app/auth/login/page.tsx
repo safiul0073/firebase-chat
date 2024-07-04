@@ -14,14 +14,13 @@ const SignIn = () => {
     }
   },[session, router])
   const handleSubmit = (values: any) => {
-    signIn("credentials", { ...values, redirect: false });
+    console.log(values)
+    signIn("credentials", { ...values, redirect: true, callbackUrl: "/" });
   }
   return (
     <div className="flex justify-center items-center h-screen bg-gray-100">
       <Form
         name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
         initialValues={{ remember: true }}
         onFinish={handleSubmit}
         autoComplete="off"
