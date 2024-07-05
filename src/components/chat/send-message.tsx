@@ -11,7 +11,6 @@ const MessageForm: React.FC<MessageFormProps> = ({ activeUser , authUser }) => {
   const handleSubmit = async (values: any) => {
     if (values.message.trim() && authUser && activeUser) {
       // Add chats to db
-      if (activeUser.is_gorup_chat) return alert("This is a group chat");
       createMessage({
         type: "text",
         text: values.message,

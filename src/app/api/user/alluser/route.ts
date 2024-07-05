@@ -12,11 +12,6 @@ export async function GET(req: NextRequest, res: NextRequest) {
             email: true,
             phone: true
         },
-        where: {
-            NOT: {
-                id: authUser?.user?.id ? Number(authUser?.user?.id) : undefined
-            }
-        }
     });
     return NextResponse.json(users);
 }
