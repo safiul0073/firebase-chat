@@ -19,10 +19,21 @@ export const Users = ({ setActiveUser, authUser }: PropsType) => {
     const res = await getAllRooms(authUser?.id);
     const userResponse = await fetch("/api/user/alluser");
     const users = await userResponse.json();
-    const rooms = res.docs.map((doc: any) => ({
-      ...doc.data(),
-      id: doc.id,
-    }));
+    const rooms = res.docs.map((doc: any) => {
+      let room: ActiveChateUserType = doc.data();
+      room = {
+        ...room,
+        id: doc.id,
+      };
+      if (!room.is_gorup_chat) {
+        room.user = users.find(
+          (user: UserType) =>
+            user.id ===
+            room.participants.find((id: number) => id != authUser?.id)
+        );
+      }
+      return room;
+    });
     setlocalUsers(users);
     setChats(rooms);
   };
@@ -66,7 +77,7 @@ export const Users = ({ setActiveUser, authUser }: PropsType) => {
       });
       await getAllUsers();
       setIsModalOpen(false);
-      return
+      return;
     }
     const user = localUsers.find((user: UserType) => user.email === userEmail);
     if (!user) return;
@@ -124,7 +135,7 @@ export const Users = ({ setActiveUser, authUser }: PropsType) => {
                 activeLocalUser?.id === user?.id ? "bg-gray-100" : ""
               }`}
             >
-              {user.name}
+              {!user.is_gorup_chat ? user?.user?.name : user?.name  + " " + user.participants.length + " members"}
             </div>
           ))}
         </div>

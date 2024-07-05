@@ -13,7 +13,7 @@ const Index = () => {
       <div className="w-1/4">
         <Users setActiveUser={setActiveUser} authUser={session.user} />
       </div>
-      <div className="w-3/4 flex flex-col border-1 border-gray-200">
+      <div className="w-3/4 h-[calc(100vh-80px)] flex flex-col">
         <MessageList authUser={session.user} activeUser={activeUser} />
         <MessageForm activeUser={activeUser} authUser={session.user} />
       </div>

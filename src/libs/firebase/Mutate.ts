@@ -1,5 +1,6 @@
-import { db } from "@/libs/firebase/firebase";
+import { db, storageRef } from "@/libs/firebase/firebase";
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { uploadBytes } from "firebase/storage";
 
 export interface RoomTypes {
   is_gorup_chat?: boolean
@@ -10,8 +11,9 @@ export interface RoomTypes {
 }
 
 export interface MessageTypes {
-    type: string // "text" | "image"
-    text: string
+    type: string // "text" | "image" | "audio" | "video"
+    text?: string
+    files?: File[]
     sender_id: number
     receiver_id: number
     room_id: string
@@ -27,9 +29,27 @@ const createRoom = async (room: RoomTypes) => {
 };
 
 const createMessage = async (message: MessageTypes) => {
-  await addDoc(collection(db, "messages"), {
-    ...message,
+
+  const uploadMessage: any = {
+    type: message.type?? "text",
+    text: message.text ?? "",
+    sender_id: Number(message.sender_id),
+    receiver_id: Number(message.receiver_id),
+    room_id: message.room_id,
+    file_paths: [], 
     created_at: serverTimestamp()
+  }
+
+  if (message.type == "image" && message?.files && !!message.files.length) {
+    message.files.forEach((file: any) => {
+      uploadBytes(storageRef, file).then((snapshot) => {
+        uploadMessage.filePaths.push(snapshot.ref.fullPath)
+      })
+    })
+  }
+
+  await addDoc(collection(db, "messages"), {
+    ...uploadMessage
   })
 };
 

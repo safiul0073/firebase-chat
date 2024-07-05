@@ -1,15 +1,16 @@
 "use client";
 import React, { useEffect } from "react";
-
 import type { FormProps } from "antd";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Form, Input } from "antd";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+
 type FieldType = {
-  email?: string;
-  password?: string;
+  email: string;
+  password: string;
 };
+
 const SignIn = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
