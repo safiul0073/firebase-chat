@@ -1,7 +1,7 @@
 import { RoomTypes } from "@/libs/firebase/Mutate";
 
 export interface UserType {
-    id: number;
+    id?: number;
     name: string;
     email: string;
     phone: string;

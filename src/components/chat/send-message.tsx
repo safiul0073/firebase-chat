@@ -9,7 +9,7 @@ interface MessageFormProps {
 }
 const MessageForm: React.FC<MessageFormProps> = ({ activeUser , authUser }) => {
   const handleSubmit = async (values: any) => {
-    if (values.message.trim() && authUser && activeUser) {
+    if (values.message.trim() && authUser?.id && activeUser) {
       // Add chats to db
       createMessage({
         type: "text",

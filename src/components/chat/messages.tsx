@@ -27,6 +27,7 @@ const MessageList: React.FC<MessageTypes> = ({ activeUser, authUser }) => {
   };
   useEffect(() => {
     setMessageFromDb();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeUser, authUser]);
 
   return (

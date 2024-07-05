@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import React, { useEffect, useState } from "react";
 import { ActiveChateUserType, UserType } from "@/types/authTypes";
@@ -14,7 +15,7 @@ export const Users = ({ setActiveUser, authUser }: PropsType) => {
   const [localUsers, setlocalUsers] = useState<any>([]);
 
   const getAllUsers = async () => {
-    if (!authUser) return;
+    if (!authUser?.id) return;
     const res = await getAllRooms(authUser?.id);
     const userResponse = await fetch("/api/user/alluser");
     const users = await userResponse.json();
