@@ -10,6 +10,9 @@ export async function middleware(request: NextRequest) {
   const url = request.nextUrl.pathname;
   const witoutAuth = ["/auth/login", "/auth/register"];
   if (!jwt && !witoutAuth.includes(url)) {
+    if (request.nextUrl.pathname === "/") {
+      return NextResponse.redirect(new URL("/auth/login", request.url));
+    }
     return NextResponse.next(
       {
         headers: requestHeaders,
